@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Home Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            setInterval(function(){
+                $.getJSON('/fetch_data', function(data) {
+                    if (data.temperature !== undefined) {
+                        document.getElementById('temperature').textContent = data.temperature + ' °C';
+                    }
+                    if (data.humidity !== undefined) {
+                        document.getElementById('humidity').textContent = data.humidity + ' %';
+                    }
+                    if (data.pm25 !== undefined) {
+                        document.getElementById('pm25').textContent = data.pm25 + ' µg/m³';
+                    }
+                    if (data.dehumidifier !== undefined) {
+                        document.getElementById('dehumidifier').textContent = data.dehumidifier ? 'On' : 'Off';
+                    }
+                    if (data.air_purifier !== undefined) {
+                        document.getElementById('air_purifier').textContent = data.air_purifier ? 'On' : 'Off';
+                    }
+                    if (data.air_conditioner !== undefined) {
+                        document.getElementById('air_conditioner').textContent = data.air_conditioner ? 'On' : 'Off';
+                    }
+                });
+            }, 5000); // Update every 5000 milliseconds
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Smart Home Dashboard</h1>
+        <div class="card">
+            <div class="card-header">Temperature</div>
+            <div class="card-body">
+                <p id="temperature" class="card-text">Loading...</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Humidity</div>
+            <div class="card-body">
+                <p id="humidity" class="card-text">Loading...</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">PM2.5</div>
+            <div class="card-body">
+                <p id="pm25" class="card-text">Loading...</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Dehumidifier</div>
+            <div class="card-body">
+                <p id="dehumidifier" class="card-text">Loading...</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Air Purifier</div>
+            <div class="card-body">
+                <p id="air_purifier" class="card-text">Loading...</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Air Conditioner</div>
+            <div class="card-body">
+                <p id="air_conditioner" class="card-text">Loading...</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
